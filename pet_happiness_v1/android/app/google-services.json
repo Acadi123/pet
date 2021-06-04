@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "557087563783",
+    "project_id": "pet-happ",
+    "storage_bucket": "pet-happ.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:557087563783:android:28485b1852fd99c3b7caa2",
+        "android_client_info": {
+          "package_name": "com.example.pet_happiness_v1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "557087563783-99i21e7v4tqitgtuneeinp71sca5erfe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVizFhEVo210jbJ2z5PTo0kGBi-oJDt8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "557087563783-99i21e7v4tqitgtuneeinp71sca5erfe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

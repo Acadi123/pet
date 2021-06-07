@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:pet_happiness_v1/RouteGenerator.dart';
+import 'package:pet_happiness_v1/views/Anuncios.dart';
 
 
-import 'views/Home.dart';
+import 'views/Login.dart';
 
 final ThemeData tema = ThemeData(
   primaryColor: Colors.redAccent ,
@@ -26,7 +28,9 @@ void main() async {
     ),
 
     title: "",
-    home: Home(),
+    home: Anuncios(),
+    initialRoute: "/",
+    onGenerateRoute: RouteGenerator.generateRoute,
     //theme: tema,
     debugShowCheckedModeBanner: false,
   ));

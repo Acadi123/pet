@@ -5,16 +5,16 @@ import 'package:pet_happiness_v1/views/InputCustomizado.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
 
 
 
   @override
-  _HomeState createState() => _HomeState();
+  _LoginState createState() => _LoginState();
 }
 
-class _HomeState extends State<Home> {
+class _LoginState extends State<Login> {
 
   TextEditingController _controllerEmail = TextEditingController(text: "acadi@hotmail.com");
   TextEditingController _controllerSenha = TextEditingController(text: "1234567" );
@@ -33,6 +33,8 @@ class _HomeState extends State<Home> {
     ).then((firebaseUser){
 
       //redireciona para tela principal
+      Navigator.pushReplacementNamed(context, "/");
+
 
     });
 
@@ -48,6 +50,7 @@ class _HomeState extends State<Home> {
     ).then((firebaseUser){
 
       //redireciona para tela principal
+      Navigator.pushReplacementNamed(context, "/");
 
     });
 
@@ -137,7 +140,7 @@ class _HomeState extends State<Home> {
                         onChanged: (bool valor){
                           setState(() {
                             _cadastrar = valor;
-                            _textoBotao = "Entrar";
+                            _textoBotao = "Acessar";
                             if(_cadastrar){
                               _textoBotao = "Cadastrar";
                             }

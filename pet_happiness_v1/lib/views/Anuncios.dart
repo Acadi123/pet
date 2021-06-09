@@ -37,7 +37,7 @@ class _AnunciosState extends State<Anuncios> {
     FirebaseAuth auth = FirebaseAuth.instance;
     await auth.signOut();
 
-    Navigator.pushNamed(context, "/Login");
+    Navigator.pushNamed(context, "/");
 
   }
 

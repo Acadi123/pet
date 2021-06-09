@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_happiness_v1/models/Usuario.dart';
-import 'package:pet_happiness_v1/views/InputCustomizado.dart';
+import 'package:pet_happiness_v1/views/widgets/InputCustomizado.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
@@ -16,12 +16,12 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
-  TextEditingController _controllerEmail = TextEditingController(text: "acadi@hotmail.com");
-  TextEditingController _controllerSenha = TextEditingController(text: "1234567" );
+  TextEditingController _controllerEmail = TextEditingController(text: "");
+  TextEditingController _controllerSenha = TextEditingController(text: "" );
 
   bool _cadastrar = false;
   String _mensagemErro = "";
-  String _textoBotao = "Entrar";
+  String _textoBotao = "Acessar";
 
   _cadastrarUsuario(Usuario usuario){
 

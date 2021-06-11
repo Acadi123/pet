@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pet_happiness_v1/views/widgets/BotaoCustomizado.dart';
 
 class NovoAnuncio extends StatefulWidget {
@@ -15,9 +16,21 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
 
   List<File> _listaImagens = List.empty();
 
-  final _formKey = GlobalKey<FormState>();
+  final  picker = ImagePicker();
 
-  _selecionarImagemGaleria(){
+  final _formKey = GlobalKey<FormState>();
+  ImagePicker imagePicker = ImagePicker();
+
+  _selecionarImagemGaleria() async {
+
+    PickedFile?  imagemSelecionada = await picker.getImage(source: ImageSource.gallery);
+
+    if(imagemSelecionada != null ){
+      setState(() {
+        _listaImagens.add( imagemSelecionada);
+      });
+
+    }
 
   }
 
@@ -87,7 +100,40 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                                   );
                                 }
                                 if( _listaImagens.length > 0 ){
+                                  return Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 8),
+                                      child: GestureDetector(
+                                        onTap: (){
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) => Dialog(
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: <Widget>[
+                                                  Image.file(_listaImagens[indice] ),
+                                                  ElevatedButton.icon(
+                                                      onPressed: (){
+                                                        _listaImagens.remove(indice);
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                      icon: const Icon(Icons.delete),
+                                                      label: Text("Excluir"))
+                                                ],),
+                                              )
+                                          );
+                                        },
+                                        child: CircleAvatar(
+                                          radius: 50,
+                                          backgroundImage: FileImage(_listaImagens[indice]),
+                                          child: Container(
+                                            color: Color.fromRGBO(255, 255, 255, 0.4),
+                                            alignment: Alignment.center,
+                                            child: Icon(Icons.delete, color: Colors.red,),
+                                          ),
+                                        ),
 
+                                      ),
+                                  );
                                 }
                                 return Container();
                           }

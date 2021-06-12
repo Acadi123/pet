@@ -1,8 +1,9 @@
 import 'dart:io';
 
+import 'package:brasil_fields/brasil_fields.dart'; // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart'; // ignore: import_of_legacy_library_into_null_safe
 import 'package:pet_happiness_v1/views/widgets/BotaoCustomizado.dart';
 
 class NovoAnuncio extends StatefulWidget {
@@ -14,16 +15,20 @@ class NovoAnuncio extends StatefulWidget {
 
 class _NovoAnuncioState extends State<NovoAnuncio> {
 
-  List<File> _listaImagens = List.empty();
+  List<File> _listaImagens = [];
+  List<DropdownMenuItem<String>> _listaItensDropEstados = [];
+  List<DropdownMenuItem<String>> _listaItensDropCategrias = [];
 
-  final  picker = ImagePicker();
+
+  //final  picker = ImagePicker();
 
   final _formKey = GlobalKey<FormState>();
-  ImagePicker imagePicker = ImagePicker();
+  //ImagePicker imagePicker = ImagePicker();
 
   _selecionarImagemGaleria() async {
 
-    PickedFile?  imagemSelecionada = await picker.getImage(source: ImageSource.gallery);
+    //PickedFile?  imagemSelecionada = await picker.getImage(source: ImageSource.gallery);
+    File imagemSelecionada = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     if(imagemSelecionada != null ){
       setState(() {
@@ -31,6 +36,22 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
       });
 
     }
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _carregarItensDropdown();
+  }
+  _carregarItensDropdown(){
+    
+    _listaItensDropEstados.add(
+      DropdownMenuItem(child: Text("Recife"), value: "Recife",)
+    );
+    _listaItensDropEstados.add(
+        DropdownMenuItem(child: Text("Camaragibe"), value: "Camaragibe",)
+    );
 
   }
 
@@ -155,7 +176,17 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
               ),
               //Menus Dropdown
               Row(children: <Widget>[
-                Text("Estado"),
+                Expanded(
+                    child: Padding(
+                        padding: EdgeInsets.all(8),
+                        child: DropdownButtonFormField(
+                          hint: Text("Cidades"),
+                          items: _listaItensDropEstados,
+                          onChanged: (valor){
+                            
+                          },
+                        ),
+                    )),
                 Text("Categoria"),
               ],),
               //caixas de textos e botões

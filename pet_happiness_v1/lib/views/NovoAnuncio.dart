@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:brasil_fields/brasil_fields.dart'; // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart'; // ignore: import_of_legacy_library_into_null_safe
 import 'package:pet_happiness_v1/views/widgets/BotaoCustomizado.dart';
+import 'package:pet_happiness_v1/views/widgets/InputCustomizado.dart';
 import 'package:validadores/Validador.dart';
 
 class NovoAnuncio extends StatefulWidget {
@@ -19,6 +21,15 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
   List<File> _listaImagens = [];
   List<DropdownMenuItem<String>> _listaItensDropEstados = [];
   List<DropdownMenuItem<String>> _listaItensDropCategrias = [];
+
+
+  TextEditingController _nada = TextEditingController(text: "");
+  TextEditingController _nadaa = TextEditingController(text: "");
+  TextEditingController _nadaaa = TextEditingController(text: "");
+  TextEditingController _nadaaaa = TextEditingController(text: "");
+  TextEditingController _nadaaaaa = TextEditingController(text: "");
+
+
 
 
   //final  picker = ImagePicker();
@@ -234,11 +245,66 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                 ),
               ],),
               //caixas de textos e botões
-              Text("Caixas de textos"),
+              Padding(
+                  padding: EdgeInsets.only(bottom: 15, top: 15),
+                  child: InputCustomizado(
+                      controller: _nada,
+                      hint: "Título do Anúncio",
+                      inputFormatters: [],
+                      maxLines: 1
+                  ),
+              ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 15),
+                    child: InputCustomizado(
+                        controller: _nadaaaaa,
+                        hint: "Cidade",
+                        //type: TextInputType.number,
+                        inputFormatters: [],
+                        maxLines: 1
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(bottom: 15),
+                      child: InputCustomizado(
+                          controller: _nadaa,
+                          hint: "CEP",
+                          type: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            CepInputFormatter()
+                          ],
+                          maxLines: 1
+                      ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 15),
+                    child: InputCustomizado(
+                        controller: _nadaaa,
+                        hint: "Telefone",
+                        type: TextInputType.phone,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          TelefoneInputFormatter()
+                        ],
+                        maxLines: 1
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(bottom: 15),
+                      child: InputCustomizado(
+                          controller: _nadaaaa,
+                          hint: "Descrição do Anúncio",
+                          inputFormatters: [],
+                          maxLines: 3
+                      ),
+                  ),
               BotaoCustomizado(
-                  texto: "Cadastrar anúncio",
+                  texto: "Cadastrar Anúncio",
                   onPressed: (){
                     if( _formKey.currentState!.validate() ){
+
+
 
                     }
 

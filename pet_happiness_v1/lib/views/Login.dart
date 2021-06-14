@@ -120,12 +120,16 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 InputCustomizado(
+                    inputFormatters: [],
+                    maxLines: 1,
                     controller: _controllerEmail,
                     hint: "Email",
                     autofocus: true,
                     type: TextInputType.emailAddress,
                 ),
                 InputCustomizado(
+                    inputFormatters: [],
+                    maxLines: 1,
                     controller: _controllerSenha,
                     hint: "Senha",
                     obscure: true,

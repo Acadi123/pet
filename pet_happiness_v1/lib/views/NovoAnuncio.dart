@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // ignore: import_of_legacy_library_into_null_safe
 import 'package:pet_happiness_v1/views/widgets/BotaoCustomizado.dart';
+import 'package:validadores/Validador.dart';
 
 class NovoAnuncio extends StatefulWidget {
   const NovoAnuncio({Key? key}) : super(key: key);
@@ -45,13 +46,27 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
     _carregarItensDropdown();
   }
   _carregarItensDropdown(){
-    
-    _listaItensDropEstados.add(
-      DropdownMenuItem(child: Text("Recife"), value: "Recife",)
+
+    //Cidades
+    //_listaItensDropEstados.add(
+    //  DropdownMenuItem(child: Text("Recife"), value: "Recife",)
+   // );
+    //_listaItensDropEstados.add(
+    //    DropdownMenuItem(child: Text("Camaragibe"), value: "Camaragibe",)
+   // );
+    for ( var estado in Estados.listaEstados){
+      _listaItensDropEstados.add(
+        DropdownMenuItem(child: Text(estado), value: estado,)
+      );
+    }
+    _listaItensDropCategrias.add(
+      DropdownMenuItem(child: Text("Cachorro"), value: "Cachorro",)
     );
-    _listaItensDropEstados.add(
-        DropdownMenuItem(child: Text("Camaragibe"), value: "Camaragibe",)
+    _listaItensDropCategrias.add(
+      DropdownMenuItem(child: Text("Gato"), value: "Gato",)
     );
+
+
 
   }
 
@@ -175,19 +190,48 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
 
               ),
               //Menus Dropdown
-              Row(children: <Widget>[
+              new Wrap(spacing: 4,
+                runSpacing: 2,
+                direction: Axis.horizontal,
+                children: <Widget>[
                 Expanded(
                     child: Padding(
                         padding: EdgeInsets.all(8),
                         child: DropdownButtonFormField(
-                          hint: Text("Cidades"),
+                          hint: Text("Estado"),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20
+                          ),
                           items: _listaItensDropEstados,
+                          validator: (valor){
+                            return Validador().add(Validar.OBRIGATORIO, msg: "Campo Obrigatório").valido("valor");
+                          },
                           onChanged: (valor){
                             
                           },
                         ),
-                    )),
-                Text("Categoria"),
+                    ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: DropdownButtonFormField(
+                      hint: Text("Animal"),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20
+                      ),
+                      items: _listaItensDropCategrias,
+                      validator: (valor){
+                        return Validador().add(Validar.OBRIGATORIO, msg: "Campo Obrigatório").valido("valor");
+                      },
+                      onChanged: (valor){
+
+                      },
+                    ),
+                  ),
+                ),
               ],),
               //caixas de textos e botões
               Text("Caixas de textos"),

@@ -401,16 +401,30 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                   ),
                   Padding(
                       padding: EdgeInsets.only(bottom: 15),
-                      child: InputCustomizado(
-                          controller: _nadaaaa,
-                          hint: "Descrição do Anúncio",
-                          onSaved: (descricao){
-                            _anuncio.descricao = descricao.toString();
-                          },
-                          inputFormatters: [],
-                          maxLines: 3
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.add_comment_rounded),
+                          hintText: "Descrição"
+                        ),
+                        onSaved: (descricao) {
+                          _anuncio.descricao = descricao!;
+                        }
+
+
                       ),
                   ),
+                  //Padding(
+                    //  padding: EdgeInsets.only(bottom: 15),
+                      //child: InputCustomizado(
+                        //  controller: _nadaaaa,
+                          //hint: "Descrição do Anúncio",
+                          //onSaved: (descricao){
+                            //_anuncio.descricao = descricao;
+                          //},
+                          //inputFormatters: [],
+                          //maxLines: 3
+                      //),
+                  //),
               BotaoCustomizado(
                   texto: "Cadastrar Anúncio",
                   onPressed: (){

@@ -1,4 +1,6 @@
 
+import 'dart:core';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -22,11 +24,17 @@ class Anuncio{
 
 
       this.fotos = [];
+      descricao = [""].toString();
+      titulo = [""].toString();
+      cep = [""].toString();
+      telefone = [""].toString();
+      cidade = [""].toString();
 
 
    }
 
    Map<String, dynamic> toMap(){
+
 
      Map<String, dynamic> map = {
         // ignore: unnecessary_statements
@@ -36,15 +44,15 @@ class Anuncio{
         // ignore: unnecessary_statements
         "animal" :this.animal,
         // ignore: unnecessary_statements
-        //"titulo" :this.titulo,
+        "titulo" :this.titulo,
         // ignore: unnecessary_statements
-        //"cidade" :this.cidade,
+        "cidade" :this.cidade,
         // ignore: unnecessary_statements
-        //"cep" :this.cep,
+        "cep" :this.cep,
         // ignore: unnecessary_statements
-        //"telefone" :this.telefone,
+        "telefone" :this.telefone,
         // ignore: unnecessary_statements
-        //"descricao" :this.descricao,
+        "descricao" :this.descricao,
         // ignore: unnecessary_statements
         "fotos" :this.fotos,
 

@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:brasil_fields/brasil_fields.dart'; // ignore: import_of_legacy_library_into_null_safe
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart'; // ignore: import_of_legacy_library_into_null_safe
+import 'package:pet_happiness_v1/models/Anuncio.dart';
 import 'package:pet_happiness_v1/views/widgets/BotaoCustomizado.dart';
 import 'package:pet_happiness_v1/views/widgets/InputCustomizado.dart';
 import 'package:validadores/Validador.dart';
@@ -36,6 +38,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
 
   final _formKey = GlobalKey<FormState>();
   //ImagePicker imagePicker = ImagePicker();
+  late Anuncio _anuncio;
 
   _selecionarImagemGaleria() async {
 
@@ -51,10 +54,51 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
 
   }
 
+
+  _salvarAnuncio() async {
+
+    //Upload imagens no Storage
+    await _uploadImagens();
+
+    print("Lista imagens: ${_anuncio.fotos.toString()}");
+
+
+
+  }
+
+  Future _uploadImagens() async {
+
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference pastaRaiz = storage.ref();
+
+    for ( var imagem in _listaImagens ) {
+      
+      String nomeImagem = DateTime.now().microsecondsSinceEpoch.toString();
+
+      Reference arquivo = pastaRaiz
+          .child("meus_anuncios")
+          .child(_anuncio.id)
+          .child(nomeImagem);
+
+      UploadTask uploadTask = arquivo.putFile(imagem);
+      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+
+      String url = await taskSnapshot.ref.getDownloadURL();
+      _anuncio.fotos.add(url);
+
+    }
+
+  }
+
+
   @override
   void initState() {
     super.initState();
     _carregarItensDropdown();
+
+    _anuncio = Anuncio();
+
+
   }
   _carregarItensDropdown(){
 
@@ -209,7 +253,11 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                     child: Padding(
                         padding: EdgeInsets.all(8),
                         child: DropdownButtonFormField(
-                          hint: Text("Estado"),
+                          hint: Text("Selecione o Estado"),
+                          onSaved: ( estado){
+                            _anuncio.estado = estado.toString();
+
+                          },
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 20
@@ -229,6 +277,10 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                     padding: EdgeInsets.all(8),
                     child: DropdownButtonFormField(
                       hint: Text("Animal"),
+                      onSaved: ( animal){
+                        _anuncio.animal = animal.toString();
+
+                      },
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 20
@@ -248,6 +300,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
               Padding(
                   padding: EdgeInsets.only(bottom: 15, top: 15),
                   child: InputCustomizado(
+                      onSaved: (titulo){
+                        _anuncio.titulo = titulo.toString();
+                      },
                       controller: _nada,
                       hint: "Título do Anúncio",
                       inputFormatters: [],
@@ -259,6 +314,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                     child: InputCustomizado(
                         controller: _nadaaaaa,
                         hint: "Cidade",
+                        onSaved: (cidade){
+                          _anuncio.cidade = cidade.toString();
+                        },
                         //type: TextInputType.number,
                         inputFormatters: [],
                         maxLines: 1
@@ -269,6 +327,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                       child: InputCustomizado(
                           controller: _nadaa,
                           hint: "CEP",
+                          onSaved: (cep){
+                            _anuncio.cep = cep.toString();
+                          },
                           type: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
@@ -282,6 +343,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                     child: InputCustomizado(
                         controller: _nadaaa,
                         hint: "Telefone",
+                        onSaved: (telefone){
+                          _anuncio.telefone = telefone.toString();
+                        },
                         type: TextInputType.phone,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
@@ -295,6 +359,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                       child: InputCustomizado(
                           controller: _nadaaaa,
                           hint: "Descrição do Anúncio",
+                          onSaved: (descricao){
+                            _anuncio.descricao = descricao.toString();
+                          },
                           inputFormatters: [],
                           maxLines: 3
                       ),
@@ -303,6 +370,13 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                   texto: "Cadastrar Anúncio",
                   onPressed: (){
                     if( _formKey.currentState!.validate() ){
+
+
+                      //salva campos
+                      _formKey.currentState!.save();
+
+                      //salvar anuncio
+                      _salvarAnuncio();
 
 
 

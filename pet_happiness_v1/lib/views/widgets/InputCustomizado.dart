@@ -12,6 +12,7 @@ class InputCustomizado extends StatelessWidget {
   final TextInputType type;
   final int maxLines;
   final List<TextInputFormatter> inputFormatters;
+  //final Function(String) onSaved;
 
   InputCustomizado({
     required this.controller,
@@ -20,7 +21,8 @@ class InputCustomizado extends StatelessWidget {
     this.obscure = false,
     this.type = TextInputType.text,
     required this.inputFormatters,
-    required this.maxLines
+    required this.maxLines, onSaved,
+    //required this.onSaved
   });
 
   @override

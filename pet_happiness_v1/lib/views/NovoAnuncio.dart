@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:brasil_fields/brasil_fields.dart'; // ignore: import_of_legacy_library_into_null_safe
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +12,7 @@ import 'package:image_picker/image_picker.dart'; // ignore: import_of_legacy_lib
 import 'package:pet_happiness_v1/models/Anuncio.dart';
 import 'package:pet_happiness_v1/views/widgets/BotaoCustomizado.dart';
 import 'package:pet_happiness_v1/views/widgets/InputCustomizado.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:validadores/Validador.dart';
 
 class NovoAnuncio extends StatefulWidget {
@@ -23,6 +27,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
   List<File> _listaImagens = [];
   List<DropdownMenuItem<String>> _listaItensDropEstados = [];
   List<DropdownMenuItem<String>> _listaItensDropCategrias = [];
+  late BuildContext _dialogContext;
 
 
   TextEditingController _nada = TextEditingController(text: "");
@@ -40,6 +45,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
   //ImagePicker imagePicker = ImagePicker();
   late Anuncio _anuncio;
 
+
   _selecionarImagemGaleria() async {
 
     //PickedFile?  imagemSelecionada = await picker.getImage(source: ImageSource.gallery);
@@ -54,13 +60,52 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
 
   }
 
+  _abrirDialog(BuildContext context){
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context){
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+              CircularProgressIndicator(),
+              SizedBox(height: 20,),
+              Text("Salvando anúncio...")
+            ],),
+          );
+        }
+    );
+
+  }
+
 
   _salvarAnuncio() async {
+
+    _abrirDialog(_dialogContext);
 
     //Upload imagens no Storage
     await _uploadImagens();
 
-    print("Lista imagens: ${_anuncio.fotos.toString()}");
+    //print("Lista imagens: ${_anuncio.fotos.toString()}");
+
+    //Salvar anuncio no Firestore
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User usuarioLogado = await auth.currentUser!;
+    String idUsuarioLogado = usuarioLogado.uid;
+
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    db.collection("meus_anuncios")
+      .doc(idUsuarioLogado)
+      .collection("anuncios")
+      .doc(_anuncio.id)
+      .set(_anuncio.toMap()).then((_) {
+
+        Navigator.pop(_dialogContext);
+
+        Navigator.pushReplacementNamed(context, "/meus-anuncios");
+    });
 
 
 
@@ -374,6 +419,9 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
 
                       //salva campos
                       _formKey.currentState!.save();
+
+                      //configura dialog context
+                      _dialogContext = context;
 
                       //salvar anuncio
                       _salvarAnuncio();

@@ -342,63 +342,119 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                 ),
               ],),
               //caixas de textos e botões
-              Padding(
-                  padding: EdgeInsets.only(bottom: 15, top: 15),
-                  child: InputCustomizado(
-                      onSaved: (titulo){
-                        _anuncio.titulo = titulo.toString();
-                      },
-                      controller: _nada,
-                      hint: "Título do Anúncio",
-                      inputFormatters: [],
-                      maxLines: 1
-                  ),
-              ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 15),
-                    child: InputCustomizado(
-                        controller: _nadaaaaa,
-                        hint: "Cidade",
-                        onSaved: (cidade){
-                          _anuncio.cidade = cidade.toString();
-                        },
+                    child: TextFormField(
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.title),
+                            hintText: "titulo"
+                        ),
+                        onSaved: (titulo) {
+                          _anuncio.titulo = titulo!;
+                        }
+
+
+                    ),
+                  ),
+              //Padding(
+                //  padding: EdgeInsets.only(bottom: 15, top: 15),
+                  //child: InputCustomizado(
+                    //  onSaved: (titulo){
+                      //  _anuncio.titulo = titulo.toString();
+                      //},
+                      //controller: _nada,
+                      //hint: "Título do Anúncio",
+                      //inputFormatters: [],
+                      //maxLines: 1
+                  //),
+              //),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 15),
+                    child: TextFormField(
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.location_city),
+                            hintText: "cidade"
+                        ),
+                        onSaved: (cidade) {
+                          _anuncio.cidade = cidade!;
+                        }
+
+
+                    ),
+                  ),
+                  //Padding(
+                    //padding: EdgeInsets.only(bottom: 15),
+                    //child: InputCustomizado(
+                      //  controller: _nadaaaaa,
+                        //hint: "Cidade",
+                        //onSaved: (cidade){
+                         // _anuncio.cidade = cidade.toString();
+                        //},
                         //type: TextInputType.number,
-                        inputFormatters: [],
-                        maxLines: 1
-                    ),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(bottom: 15),
-                      child: InputCustomizado(
-                          controller: _nadaa,
-                          hint: "CEP",
-                          onSaved: (cep){
-                            _anuncio.cep = cep.toString();
-                          },
-                          type: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            CepInputFormatter()
-                          ],
-                          maxLines: 1
-                      ),
-                  ),
+                        //inputFormatters: [],
+                        //maxLines: 1
+                    //),
+                  //),
                   Padding(
                     padding: EdgeInsets.only(bottom: 15),
-                    child: InputCustomizado(
-                        controller: _nadaaa,
-                        hint: "Telefone",
-                        onSaved: (telefone){
-                          _anuncio.telefone = telefone.toString();
-                        },
-                        type: TextInputType.phone,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          TelefoneInputFormatter()
-                        ],
-                        maxLines: 1
+                    child: TextFormField(
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.location_on),
+                            hintText: "cep"
+                        ),
+                        onSaved: (cep) {
+                          _anuncio.cep = cep!;
+                        }
+
+
                     ),
                   ),
+                 // Padding(
+                   //   padding: EdgeInsets.only(bottom: 15),
+                     // child: InputCustomizado(
+                       //   controller: _nadaa,
+                         // hint: "CEP",
+                          //onSaved: (cep){
+                           // _anuncio.cep = cep.toString();
+                          //},
+                          //type: TextInputType.number,
+                          //inputFormatters: [
+                            //FilteringTextInputFormatter.digitsOnly,
+                            //CepInputFormatter()
+                          //],
+                          //maxLines: 1
+                      //),
+                  //),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 15),
+                    child: TextFormField(
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.phone),
+                            hintText: "Telefone"
+                        ),
+                        onSaved: (telefone) {
+                          _anuncio.telefone = telefone!;
+                        }
+
+
+                    ),
+                  ),
+                  //Padding(
+                    //padding: EdgeInsets.only(bottom: 15),
+                    //child: InputCustomizado(
+                      //  controller: _nadaaa,
+                       // hint: "Telefone",
+                       // onSaved: (telefone){
+                         // _anuncio.telefone = telefone.toString();
+                        //},
+                        //type: TextInputType.phone,
+                        //inputFormatters: [
+                          //FilteringTextInputFormatter.digitsOnly,
+                          //TelefoneInputFormatter()
+                        //],
+                        //maxLines: 1
+                    //),
+                  //),
                   Padding(
                       padding: EdgeInsets.only(bottom: 15),
                       child: TextFormField(

@@ -104,7 +104,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
 
         Navigator.pop(_dialogContext);
 
-        Navigator.pushReplacementNamed(context, "/meus-anuncios");
+        Navigator.pop(context);
     });
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_happiness_v1/views/widgets/ItemAnuncio.dart';
 
 
 class MeusAnuncios extends StatefulWidget {
@@ -23,7 +24,12 @@ class _MeusAnunciosState extends State<MeusAnuncios> {
           Navigator.pushNamed(context, "/novo-anuncio");
         },
       ),
-      body: Container(),
+      body: ListView.builder(
+          itemCount: 4,
+          itemBuilder: (_, indice){
+            return ItemAnuncio();
+          }
+      ),
     );
   }
 }

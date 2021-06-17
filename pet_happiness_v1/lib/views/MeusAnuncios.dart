@@ -25,7 +25,7 @@ class _MeusAnunciosState extends State<MeusAnuncios> {
         },
       ),
       body: ListView.builder(
-          itemCount: 4,
+          itemCount: 3,
           itemBuilder: (_, indice){
             return ItemAnuncio();
           }

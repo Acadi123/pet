@@ -24,11 +24,16 @@ class Anuncio{
 
 
       this.fotos = [];
-      descricao = [""].toString();
-      titulo = [""].toString();
-      cep = [""].toString();
-      telefone = [""].toString();
-      cidade = [""].toString();
+      //this.descricao = anuncios.doc().id;
+      //this.descricao = [""].toString();
+      //this.titulo = anuncios.doc().id;
+      //this.titulo = [""].toString();
+      //this.cep = anuncios.doc().id;
+      //this.cep = [""].toString();
+      //this.telefone = anuncios.doc().id;
+      //this.telefone = [""].toString();
+      //this.cidade = anuncios.doc().id;
+      //this.cidade = [""].toString();
 
 
    }

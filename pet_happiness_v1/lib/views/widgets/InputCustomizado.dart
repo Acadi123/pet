@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,13 +16,13 @@ class InputCustomizado extends StatelessWidget {
   //final Function(String) onSaved;
 
   InputCustomizado({
-    required this.controller,
-    required this.hint,
+    this.controller,
+    this.hint,
     this.autofocus = false,
     this.obscure = false,
     this.type = TextInputType.text,
-    required this.inputFormatters,
-    required this.maxLines, onSaved,
+    this.inputFormatters,
+    this.maxLines, onSaved,
     //required this.onSaved
   });
 

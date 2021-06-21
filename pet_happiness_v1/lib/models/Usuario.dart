@@ -1,9 +1,10 @@
+// @dart=2.9
 class Usuario {
 
-  late String _idUsuario;
-  late String _nome;
-  late String _email;
-  late String _senha;
+  String _idUsuario;
+  String _nome;
+  String _email;
+  String _senha;
 
   Usuario();
 

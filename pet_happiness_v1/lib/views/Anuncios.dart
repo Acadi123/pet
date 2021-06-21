@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -5,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class Anuncios extends StatefulWidget {
-  const Anuncios({Key? key}) : super(key: key);
+  //const Anuncios({Key? key}) : super(key: key);
 
   @override
   _AnunciosState createState() => _AnunciosState();
@@ -45,7 +46,7 @@ class _AnunciosState extends State<Anuncios> {
   Future _verificarUsuarioLogado() async{
     
     //FirebaseAuth auth = FirebaseAuth.instance;
-    User? user = FirebaseAuth.instance.currentUser;
+    User user = FirebaseAuth.instance.currentUser;
     //FirebaseUser userCredential = await auth.currentUser();
 
     if( user == null){

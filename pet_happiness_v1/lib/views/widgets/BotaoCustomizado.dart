@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 
 class BotaoCustomizado extends StatelessWidget {
@@ -8,9 +9,9 @@ class BotaoCustomizado extends StatelessWidget {
   final VoidCallback onPressed;
 
   BotaoCustomizado({
-    required this.texto,
+    this.texto,
     this.corTexto = Colors.white,
-    required this.onPressed
+    this.onPressed
 });
 
   @override

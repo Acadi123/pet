@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'dart:io';
 
 import 'package:brasil_fields/brasil_fields.dart'; // ignore: import_of_legacy_library_into_null_safe
@@ -16,7 +17,7 @@ import 'package:pet_happiness_v1/views/widgets/InputCustomizado.dart';
 import 'package:validadores/Validador.dart';
 
 class NovoAnuncio extends StatefulWidget {
-  const NovoAnuncio({Key? key}) : super(key: key);
+  //const NovoAnuncio({Key? key}) : super(key: key);
 
   @override
   _NovoAnuncioState createState() => _NovoAnuncioState();
@@ -24,10 +25,13 @@ class NovoAnuncio extends StatefulWidget {
 
 class _NovoAnuncioState extends State<NovoAnuncio> {
 
-  List<File> _listaImagens = [];
-  List<DropdownMenuItem<String>> _listaItensDropEstados = [];
-  List<DropdownMenuItem<String>> _listaItensDropCategrias = [];
-  late BuildContext _dialogContext;
+  // ignore: deprecated_member_use
+  List<File> _listaImagens = List();
+  // ignore: deprecated_member_use
+  List<DropdownMenuItem<String>> _listaItensDropEstados = List();
+  // ignore: deprecated_member_use
+  List<DropdownMenuItem<String>> _listaItensDropCategrias = List();
+  BuildContext _dialogContext;
 
 
   TextEditingController _nada = TextEditingController(text: "");
@@ -43,7 +47,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
 
   final _formKey = GlobalKey<FormState>();
   //ImagePicker imagePicker = ImagePicker();
-  late Anuncio _anuncio;
+  Anuncio _anuncio;
 
 
   _selecionarImagemGaleria() async {
@@ -92,7 +96,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
 
     //Salvar anuncio no Firestore
     FirebaseAuth auth = FirebaseAuth.instance;
-    User usuarioLogado = await auth.currentUser!;
+    User usuarioLogado = await auth.currentUser;
     String idUsuarioLogado = usuarioLogado.uid;
 
     FirebaseFirestore db = FirebaseFirestore.instance;
@@ -103,6 +107,8 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
       .set(_anuncio.toMap()).then((_) {
 
         Navigator.pop(_dialogContext);
+
+        //Navigator.pushReplacementNamed(context, "/meus-anuncios");
 
         Navigator.pop(context);
     });
@@ -141,7 +147,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
     super.initState();
     _carregarItensDropdown();
 
-    _anuncio = Anuncio();
+    _anuncio = Anuncio.gerarId();
 
 
   }
@@ -190,7 +196,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
               FormField<List>(
                 initialValue: _listaImagens,
                 validator: ( imagens ){
-                  if( imagens!.length == 0 ){
+                  if( imagens.length == 0 ){
                     return "Necessário selecionar uma imagem!";
 
                   }
@@ -249,8 +255,10 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                                                   Image.file(_listaImagens[indice] ),
                                                   ElevatedButton.icon(
                                                       onPressed: (){
-                                                        _listaImagens.remove(indice);
-                                                        Navigator.of(context).pop();
+                                                        setState(() {
+                                                          _listaImagens.removeAt(indice);
+                                                          Navigator.of(context).pop();
+                                                        });
                                                       },
                                                       icon: const Icon(Icons.delete),
                                                       label: Text("Excluir"))
@@ -300,7 +308,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                         child: DropdownButtonFormField(
                           hint: Text("Selecione o Estado"),
                           onSaved: ( estado){
-                            _anuncio.estado = estado.toString();
+                            _anuncio.estado = estado;
 
                           },
                           style: TextStyle(
@@ -323,7 +331,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                     child: DropdownButtonFormField(
                       hint: Text("Animal"),
                       onSaved: ( animal){
-                        _anuncio.animal = animal.toString();
+                        _anuncio.animal = animal;
 
                       },
                       style: TextStyle(
@@ -350,7 +358,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                             hintText: "titulo"
                         ),
                         onSaved: (titulo) {
-                          _anuncio.titulo = titulo!;
+                          _anuncio.titulo = titulo;
                         }
 
 
@@ -376,7 +384,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                             hintText: "cidade"
                         ),
                         onSaved: (cidade) {
-                          _anuncio.cidade = cidade!;
+                          _anuncio.cidade = cidade;
                         }
 
 
@@ -403,7 +411,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                             hintText: "cep"
                         ),
                         onSaved: (cep) {
-                          _anuncio.cep = cep!;
+                          _anuncio.cep = cep;
                         }
 
 
@@ -433,7 +441,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                             hintText: "Telefone"
                         ),
                         onSaved: (telefone) {
-                          _anuncio.telefone = telefone!;
+                          _anuncio.telefone = telefone;
                         }
 
 
@@ -463,7 +471,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                           hintText: "Descrição"
                         ),
                         onSaved: (descricao) {
-                          _anuncio.descricao = descricao!;
+                          _anuncio.descricao = descricao;
                         }
 
 
@@ -484,11 +492,11 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
               BotaoCustomizado(
                   texto: "Cadastrar Anúncio",
                   onPressed: (){
-                    if( _formKey.currentState!.validate() ){
+                    if( _formKey.currentState.validate() ){
 
 
                       //salva campos
-                      _formKey.currentState!.save();
+                      _formKey.currentState.save();
 
                       //configura dialog context
                       _dialogContext = context;

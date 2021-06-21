@@ -1,4 +1,4 @@
-
+// @dart=2.9
 import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,17 +6,33 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class Anuncio{
 
-   late String _id;
-   late String _estado;
-   late String _animal;
-   late String _titulo;
-   late String _cidade;
-   late String _cep;
-   late String _telefone;
-   late String _descricao;
-   late List<String> _fotos;
+   String _id;
+   String _estado;
+   String _animal;
+   String _titulo;
+   String _cidade;
+   String _cep;
+   String _telefone;
+   String _descricao;
+   List<String> _fotos;
 
-   Anuncio(){
+
+   Anuncio();
+
+   Anuncio.fromDocumentSnapshot(DocumentSnapshot documentSnapshot){
+     this.id = documentSnapshot.id;
+     this.estado = documentSnapshot["estado"];
+     this.animal = documentSnapshot["animal"];
+     this.titulo = documentSnapshot["titulo"];
+     this.telefone = documentSnapshot["telefone"];
+     this.cep = documentSnapshot["cep"];
+     this.cidade = documentSnapshot["cidade"];
+     this.descricao = documentSnapshot["descricao"];
+     this.fotos = List<String>.from(documentSnapshot["fotos"]);
+
+   }
+
+   Anuncio.gerarId(){
 
       FirebaseFirestore db = FirebaseFirestore.instance;
       CollectionReference anuncios = db.collection("meus_anuncios");

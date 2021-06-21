@@ -1,13 +1,28 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
+import 'package:pet_happiness_v1/models/Anuncio.dart';
 import 'package:pet_happiness_v1/views/widgets/BotaoCustomizado.dart';
 
 class ItemAnuncio extends StatelessWidget {
-  const ItemAnuncio({Key? key}) : super(key: key);
+  //const ItemAnuncio({Key? key}) : super(key: key);
+
+  Anuncio anuncio;
+  VoidCallback onTapItem;
+  VoidCallback onPressedRemover;
+
+  ItemAnuncio(
+      {
+      @required this.anuncio,
+        this.onTapItem,
+        this.onPressedRemover
+      });
+
+
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){},
+      onTap: this.onTapItem,
       child: Card(
         child: Padding(
           padding: EdgeInsets.all(12),
@@ -18,7 +33,10 @@ class ItemAnuncio extends StatelessWidget {
               SizedBox(
                 width: 120,
                 height: 120,
-                child: Container(color: Colors.orange,),
+                child: Image.network(
+                    anuncio.fotos[0],
+                    fit: BoxFit.cover,
+                ),
               ),
               //Titulo e animal
               Expanded(
@@ -29,18 +47,18 @@ class ItemAnuncio extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                     Text(
-                        "novo",
+                        anuncio.titulo,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold
                       ),
                     ),
-                    Text("R\$ 152,00"),
+                    Text(anuncio.animal),
                   ],),
                 ),
               ),
               //botao remover
-              Expanded(
+              if(this.onPressedRemover != null)Expanded(
                 flex: 1,
                 child: Padding(
                   padding: EdgeInsets.all(0),

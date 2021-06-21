@@ -53,7 +53,7 @@ class ItemAnuncio extends StatelessWidget {
                         fontWeight: FontWeight.bold
                       ),
                     ),
-                    Text(anuncio.animal),
+                    Text(anuncio.descricao),
                   ],),
                 ),
               ),
@@ -64,7 +64,7 @@ class ItemAnuncio extends StatelessWidget {
                   padding: EdgeInsets.all(0),
                   child: ElevatedButton.icon(
                     label: Text(""),
-                    onPressed: (){},
+                    onPressed: this.onPressedRemover,
                     icon: const Icon(Icons.delete, color: Colors.white,),
                   ),
 

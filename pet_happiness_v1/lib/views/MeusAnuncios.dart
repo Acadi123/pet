@@ -49,6 +49,17 @@ class _MeusAnunciosState extends State<MeusAnuncios> {
     //return _adicionarListenerAnuncios();
   }
 
+  _removerAnuncio(String idAnuncio){
+
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    db.collection("meus_anuncios")
+      .doc(_idUsuarioLogado)
+      .collection("anuncios")
+      .doc(idAnuncio)
+      .delete();
+
+  }
+
   @override
   void initState() {
     //_adicionarListenerAnuncios();
@@ -110,7 +121,34 @@ class _MeusAnunciosState extends State<MeusAnuncios> {
 
                     return ItemAnuncio(
                       anuncio: anuncio,
-                      onPressedRemover: (){},
+                      onPressedRemover: (){
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text("Confirmar"),
+                                content: Text("Deseja realmente excluir o anúncio?"),
+                                actions: <Widget>[
+                                  ElevatedButton.icon(
+                                      onPressed: (){
+                                        Navigator.of(context).pop();
+                                      },
+                                      label: Text("Cancelar"),
+                                      icon: const Icon(Icons.cancel),
+                                  ),
+                                  ElevatedButton.icon(
+                                    onPressed: (){
+                                      _removerAnuncio( anuncio.id );
+                                      Navigator.of(context).pop();
+                                    },
+                                    label: Text("Remover"),
+                                    icon: const Icon(Icons.cancel),
+                                  ),
+                                ],
+                              );
+                            }
+                        );
+                      },
                       onTapItem: (){},
                     );
                   }

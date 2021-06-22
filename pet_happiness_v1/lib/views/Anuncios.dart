@@ -209,15 +209,15 @@ class _AnunciosState extends State<Anuncios> {
 
                       QuerySnapshot querySnapshot = snapshot.data;
 
-                      if( querySnapshot.docs.length == 0 ){
-                        return Container(
-                          padding: EdgeInsets.all(25),
-                          child: Text("Nenhum anúncio! :( ", style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold
-                          ),),
-                        );
-                      }
+                      //if( querySnapshot.docs.length == 0 ){
+                        //return Container(
+                          //padding: EdgeInsets.all(25),
+                          //child: Text("Nenhum anúncio! :( ", style: TextStyle(
+                            //fontSize: 20,
+                            //fontWeight: FontWeight.bold
+                          //),),
+                        //);
+                      //}
 
                       return Expanded(
                           child: ListView.builder(

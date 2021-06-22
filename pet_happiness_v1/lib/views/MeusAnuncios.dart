@@ -51,12 +51,22 @@ class _MeusAnunciosState extends State<MeusAnuncios> {
 
   _removerAnuncio(String idAnuncio){
 
+    //removendo de anuncios apenas usuario
+
     FirebaseFirestore db = FirebaseFirestore.instance;
     db.collection("meus_anuncios")
       .doc(_idUsuarioLogado)
       .collection("anuncios")
       .doc(idAnuncio)
-      .delete();
+      .delete().then((_){
+
+        //removendo de anuncios geral
+
+        db.collection("anuncios")
+            .doc(idAnuncio)
+            .delete();
+        
+    });
 
   }
 

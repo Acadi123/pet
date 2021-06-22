@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart'; // ignore: import_of_legacy_library_into_null_safe
 import 'package:pet_happiness_v1/models/Anuncio.dart';
+import 'package:pet_happiness_v1/util/Configuracoes.dart';
 import 'package:pet_happiness_v1/views/widgets/BotaoCustomizado.dart';
 import 'package:pet_happiness_v1/views/widgets/InputCustomizado.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -94,7 +95,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
 
     //print("Lista imagens: ${_anuncio.fotos.toString()}");
 
-    //Salvar anuncio no Firestore
+    //Salvar anuncio no Firestore para o usuario que criou
     FirebaseAuth auth = FirebaseAuth.instance;
     User usuarioLogado = await auth.currentUser;
     String idUsuarioLogado = usuarioLogado.uid;
@@ -106,11 +107,18 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
       .doc(_anuncio.id)
       .set(_anuncio.toMap()).then((_) {
 
-        Navigator.pop(_dialogContext);
+        //salvar anúncio público para mostrar em todos os anuncios
+        db.collection("anuncios")
+          .doc( _anuncio.id )
+          .set(_anuncio.toMap() ).then((_) {
 
-        //Navigator.pushReplacementNamed(context, "/meus-anuncios");
+          Navigator.pop(_dialogContext);
 
-        Navigator.pop(context);
+          //Navigator.pushReplacementNamed(context, "/meus-anuncios");
+
+          Navigator.pop(context);
+
+        });
     });
 
 
@@ -153,24 +161,12 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
   }
   _carregarItensDropdown(){
 
-    //Cidades
-    //_listaItensDropEstados.add(
-    //  DropdownMenuItem(child: Text("Recife"), value: "Recife",)
-   // );
-    //_listaItensDropEstados.add(
-    //    DropdownMenuItem(child: Text("Camaragibe"), value: "Camaragibe",)
-   // );
-    for ( var estado in Estados.listaEstados){
-      _listaItensDropEstados.add(
-        DropdownMenuItem(child: Text(estado), value: estado,)
-      );
-    }
-    _listaItensDropCategrias.add(
-      DropdownMenuItem(child: Text("Cachorro"), value: "Cachorro",)
-    );
-    _listaItensDropCategrias.add(
-      DropdownMenuItem(child: Text("Gato"), value: "Gato",)
-    );
+
+    //Estados
+    _listaItensDropEstados = Configuracoes.getEstados();
+
+    //Animal
+    _listaItensDropCategrias = Configuracoes.getCategorias();
 
 
 

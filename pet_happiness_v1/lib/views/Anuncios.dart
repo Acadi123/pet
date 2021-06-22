@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/widgets.dart';
+import 'package:pet_happiness_v1/util/Configuracoes.dart';
 
 
 class Anuncios extends StatefulWidget {
@@ -15,6 +17,11 @@ class Anuncios extends StatefulWidget {
 class _AnunciosState extends State<Anuncios> {
 
   List<String> itensMenu = [];
+  List<DropdownMenuItem<String>> _listaItensDropCategrias;
+  List<DropdownMenuItem<String>> _listaItensDropEstados;
+
+  String _itemSelecionadoEstado;
+  String _itemSelecionadoCategoria;
 
 
   _escolhaMenuItem(String itemEscolhido){
@@ -62,12 +69,26 @@ class _AnunciosState extends State<Anuncios> {
     
 
   }
+  _carregarItensDropdown(){
+
+
+    //Estados
+    _listaItensDropEstados = Configuracoes.getEstados();
+
+    //Animal
+    _listaItensDropCategrias = Configuracoes.getCategorias();
+
+
+
+  }
+
+
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
+    _carregarItensDropdown();
     _verificarUsuarioLogado();
 
   }
@@ -95,7 +116,69 @@ class _AnunciosState extends State<Anuncios> {
         ],
       ),
       body: Container(
-        child: Text("Anúncios"),
+        child: Column(
+          children: <Widget>[
+
+            //Filtros
+            Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 2,
+                    child: DropdownButtonHideUnderline(
+                      child: Center(
+                        child: DropdownButton(
+                          iconEnabledColor: Colors.redAccent,
+                          value: _itemSelecionadoEstado,
+                          items: _listaItensDropEstados,
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.black
+                          ),
+                          onChanged: (estado){
+                            setState(() {
+                              _itemSelecionadoEstado = estado;
+                            });
+                          },
+                        ),
+                      ),
+                    )
+                ),
+                Container(
+                  color: Colors.grey[200],
+                  width: 2,
+                  height: 60,
+                ),
+                Expanded(
+
+                    child: DropdownButtonHideUnderline(
+                      child: Center(
+                        child: DropdownButton(
+                          iconEnabledColor: Colors.redAccent,
+                          value: _itemSelecionadoCategoria,
+                          items: _listaItensDropCategrias,
+                          style: TextStyle(
+                              fontSize: 22,
+                              color: Colors.black
+                          ),
+                          onChanged: (animal){
+                            setState(() {
+                              _itemSelecionadoCategoria = animal;
+                            });
+                          },
+                        ),
+                      ),
+                    )
+                ),
+
+
+
+
+              ],
+            ),
+            //Listagem de anúncios
+
+          ],
+        ),
       ),
     );
   }

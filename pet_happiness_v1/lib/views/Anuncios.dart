@@ -1,10 +1,15 @@
 // @dart=2.9
+import 'dart:async';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pet_happiness_v1/models/Anuncio.dart';
 import 'package:pet_happiness_v1/util/Configuracoes.dart';
+import 'package:pet_happiness_v1/views/widgets/ItemAnuncio.dart';
 
 
 class Anuncios extends StatefulWidget {
@@ -19,6 +24,8 @@ class _AnunciosState extends State<Anuncios> {
   List<String> itensMenu = [];
   List<DropdownMenuItem<String>> _listaItensDropCategrias;
   List<DropdownMenuItem<String>> _listaItensDropEstados;
+
+  final _controler = StreamController<QuerySnapshot>.broadcast();
 
   String _itemSelecionadoEstado;
   String _itemSelecionadoCategoria;
@@ -83,6 +90,20 @@ class _AnunciosState extends State<Anuncios> {
   }
 
 
+  Future<Stream<QuerySnapshot>> _adicionarListenerAnuncios() async {
+
+
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    Stream<QuerySnapshot> stream = db
+        .collection("anuncios")
+        .snapshots();
+    
+    stream.listen((dados) {
+      _controler.add(dados);
+    });
+
+  }
+
 
   @override
   void initState() {
@@ -90,6 +111,7 @@ class _AnunciosState extends State<Anuncios> {
 
     _carregarItensDropdown();
     _verificarUsuarioLogado();
+    _adicionarListenerAnuncios();
 
   }
 
@@ -176,7 +198,51 @@ class _AnunciosState extends State<Anuncios> {
               ],
             ),
             //Listagem de anúncios
+            StreamBuilder(
+              stream: _controler.stream,
+                builder: (context, snapshot){
+                  switch( snapshot.connectionState){
+                    case ConnectionState.none:
+                    case ConnectionState.waiting:
+                    case ConnectionState.active:
+                    case ConnectionState.done:
 
+                      QuerySnapshot querySnapshot = snapshot.data;
+
+                      if( querySnapshot.docs.length == 0 ){
+                        return Container(
+                          padding: EdgeInsets.all(25),
+                          child: Text("Nenhum anúncio! :( ", style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
+                          ),),
+                        );
+                      }
+
+                      return Expanded(
+                          child: ListView.builder(
+                              itemCount:  querySnapshot.docs.length,
+                              itemBuilder: (_, indice){
+
+                                List<DocumentSnapshot> anuncios = querySnapshot.docs.toList();
+                                DocumentSnapshot documentSnapshot = anuncios[indice];
+                                Anuncio anuncio = Anuncio.fromDocumentSnapshot(documentSnapshot);
+
+                                return ItemAnuncio(
+                                    anuncio: anuncio,
+                                    onTapItem: (){
+
+                                    },
+                                );
+
+                              }
+                          ),
+                      );
+
+                  }
+                  return Container();
+                },
+            ),
           ],
         ),
       ),

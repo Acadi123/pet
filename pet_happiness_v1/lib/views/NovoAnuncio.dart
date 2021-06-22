@@ -225,7 +225,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: <Widget>[
                                             Icon(
-                                             Icons.add_a_photo,
+                                             Icons.add_a_photo_outlined,
                                              size: 40,
                                              color: Colors.grey[100],
                                             ),
@@ -260,7 +260,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                                                           Navigator.of(context).pop();
                                                         });
                                                       },
-                                                      icon: const Icon(Icons.delete),
+                                                      icon: const Icon(Icons.delete_forever_outlined),
                                                       label: Text("Excluir"))
                                                 ],),
                                               )
@@ -272,7 +272,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                                           child: Container(
                                             color: Color.fromRGBO(255, 255, 255, 0.4),
                                             alignment: Alignment.center,
-                                            child: Icon(Icons.delete, color: Colors.red,),
+                                            child: Icon(Icons.delete_forever_outlined, color: Colors.red,),
                                           ),
                                         ),
 

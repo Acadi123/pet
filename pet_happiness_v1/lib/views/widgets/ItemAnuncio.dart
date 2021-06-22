@@ -65,7 +65,7 @@ class ItemAnuncio extends StatelessWidget {
                   child: ElevatedButton.icon(
                     label: Text(""),
                     onPressed: this.onPressedRemover,
-                    icon: const Icon(Icons.delete, color: Colors.white,),
+                    icon: const Icon(Icons.delete_forever_outlined, color: Colors.white,),
                   ),
 
                 )

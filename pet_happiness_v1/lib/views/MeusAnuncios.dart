@@ -134,7 +134,7 @@ class _MeusAnunciosState extends State<MeusAnuncios> {
                                         Navigator.of(context).pop();
                                       },
                                       label: Text("Cancelar"),
-                                      icon: const Icon(Icons.cancel),
+                                      icon: const Icon(Icons.cancel_outlined),
                                   ),
                                   ElevatedButton.icon(
                                     onPressed: (){
@@ -142,7 +142,7 @@ class _MeusAnunciosState extends State<MeusAnuncios> {
                                       Navigator.of(context).pop();
                                     },
                                     label: Text("Remover"),
-                                    icon: const Icon(Icons.cancel),
+                                    icon: const Icon(Icons.delete_forever_outlined),
                                   ),
                                 ],
                               );

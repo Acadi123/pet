@@ -53,7 +53,8 @@ class ItemAnuncio extends StatelessWidget {
                         fontWeight: FontWeight.bold
                       ),
                     ),
-                    Text(anuncio.descricao),
+                    Text(anuncio.estado),
+                      Text(anuncio.cidade)
                   ],),
                 ),
               ),

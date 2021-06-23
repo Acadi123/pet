@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:pet_happiness_v1/RouteGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_happiness_v1/views/Anuncios.dart';
+import 'package:pet_happiness_v1/views/DetalhesAnuncio.dart';
 import 'package:pet_happiness_v1/views/Login.dart';
 import 'package:pet_happiness_v1/views/MeusAnuncios.dart';
 import 'package:pet_happiness_v1/views/NovoAnuncio.dart';
@@ -30,6 +31,10 @@ class RouteGenerator {
       case "/novo-anuncio":
         return MaterialPageRoute(
             builder: (_) => NovoAnuncio()
+        );
+      case "/detalhes-anuncio":
+        return MaterialPageRoute(
+            builder: (_) => DetalhesAnuncio(args)
         );
       default:
         _erroRota();

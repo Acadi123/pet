@@ -89,7 +89,6 @@ class _AnunciosState extends State<Anuncios> {
 
   }
 
-
   Future<Stream<QuerySnapshot>> _adicionarListenerAnuncios() async {
 
 
@@ -97,7 +96,29 @@ class _AnunciosState extends State<Anuncios> {
     Stream<QuerySnapshot> stream = db
         .collection("anuncios")
         .snapshots();
-    
+
+    stream.listen((dados) {
+      _controler.add(dados);
+    });
+
+  }
+
+
+  Future<Stream<QuerySnapshot>> _filtrarAnuncios() async {
+
+
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    Query query = db.collection("anuncios");
+
+    if(_itemSelecionadoEstado != null){
+      query = query.where("estado", isEqualTo: _itemSelecionadoEstado );
+    }
+    if(_itemSelecionadoCategoria != null){
+      query = query.where("animal", isEqualTo: _itemSelecionadoCategoria );
+    }
+
+
+    Stream<QuerySnapshot> stream = query.snapshots();
     stream.listen((dados) {
       _controler.add(dados);
     });
@@ -117,6 +138,14 @@ class _AnunciosState extends State<Anuncios> {
 
   @override
   Widget build(BuildContext context) {
+
+    var carregandoDados = Center(
+      child: Column(children: <Widget>[
+        Text("Carregando anúncios"),
+        CircularProgressIndicator()
+      ],),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Pet Happiness"),
@@ -145,7 +174,7 @@ class _AnunciosState extends State<Anuncios> {
             Row(
               children: <Widget>[
                 Expanded(
-                  flex: 2,
+                  flex: 10,
                     child: DropdownButtonHideUnderline(
                       child: Center(
                         child: DropdownButton(
@@ -159,6 +188,7 @@ class _AnunciosState extends State<Anuncios> {
                           onChanged: (estado){
                             setState(() {
                               _itemSelecionadoEstado = estado;
+                              _filtrarAnuncios();
                             });
                           },
                         ),
@@ -171,6 +201,7 @@ class _AnunciosState extends State<Anuncios> {
                   height: 60,
                 ),
                 Expanded(
+                  flex: 6,
 
                     child: DropdownButtonHideUnderline(
                       child: Center(
@@ -185,6 +216,7 @@ class _AnunciosState extends State<Anuncios> {
                           onChanged: (animal){
                             setState(() {
                               _itemSelecionadoCategoria = animal;
+                              _filtrarAnuncios();
                             });
                           },
                         ),
@@ -204,20 +236,22 @@ class _AnunciosState extends State<Anuncios> {
                   switch( snapshot.connectionState){
                     case ConnectionState.none:
                     case ConnectionState.waiting:
+                      return carregandoDados;
+                      break;
                     case ConnectionState.active:
                     case ConnectionState.done:
 
                       QuerySnapshot querySnapshot = snapshot.data;
 
-                      //if( querySnapshot.docs.length == 0 ){
-                        //return Container(
-                          //padding: EdgeInsets.all(25),
-                          //child: Text("Nenhum anúncio! :( ", style: TextStyle(
-                            //fontSize: 20,
-                            //fontWeight: FontWeight.bold
-                          //),),
-                        //);
-                      //}
+                      if( querySnapshot.docs.length  == 0 ){
+                        return Container(
+                          padding: EdgeInsets.all(25),
+                          child: Text("Nenhum anúncio! :( ", style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
+                          ),),
+                        );
+                      }
 
                       return Expanded(
                           child: ListView.builder(
@@ -231,7 +265,11 @@ class _AnunciosState extends State<Anuncios> {
                                 return ItemAnuncio(
                                     anuncio: anuncio,
                                     onTapItem: (){
-
+                                      Navigator.pushNamed(
+                                          context,
+                                          "/detalhes-anuncio",
+                                          arguments: anuncio
+                                      );
                                     },
                                 );
 

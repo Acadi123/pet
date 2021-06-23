@@ -64,10 +64,144 @@ class _DetalhesAnuncioState extends State<DetalhesAnuncio> {
                 autoplay: false,
                 dotIncreasedColor: Colors.redAccent,
               ),
-            )
+            ),
+            Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    _anuncio.titulo,
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red
+                    ),
+                  ),
+                  Text(
+                    _anuncio.animal,
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black
+                    ),
+                  ),
+
+                  Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: Divider(),
+                  ),
+
+                  Text(
+                    "Descrição",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red
+                    ),
+                  ),
+                  Text(
+                    _anuncio.descricao,
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.black
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Divider(),
+                  ),
+                  Text(
+                    "Contato",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red
+                    ),
+                  ),
+                  Text(
+                    _anuncio.telefone,
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.black
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Divider(),
+                  ),
+                  Text(
+                    "CEP",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red
+                    ),
+                  ),
+                  Text(
+                    _anuncio.cep,
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.black
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Divider(),
+                  ),
+                  Text(
+                    "Cidade",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red
+                    ),
+                  ),
+                  Text(
+                    _anuncio.cidade,
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.black
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Divider(),
+                  ),
+
+
+                ],
+              ),
+            ),
 
           ],),
           //botao ligar
+          Positioned(
+              left: 16,
+              right: 16,
+              bottom: 16,
+              child: GestureDetector(
+                child: Container(
+                  child: Text(
+                      "Ligar",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold
+                      ),
+                  ),
+                  padding: EdgeInsets.all(16),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent,
+                    borderRadius: BorderRadius.circular(50)
+                  ),
+                ),
+                onTap: (){
+
+                },
+              )
+          ),
         ],
       ),
     );

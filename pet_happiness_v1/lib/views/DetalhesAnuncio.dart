@@ -2,6 +2,7 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_happiness_v1/models/Anuncio.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetalhesAnuncio extends StatefulWidget {
   //const DetalhesAnuncio({Key? key}) : super(key: key);
@@ -34,6 +35,18 @@ class _DetalhesAnuncioState extends State<DetalhesAnuncio> {
 
 
   }
+
+  _ligarTelefone(String telefone) async{
+
+    if( await canLaunch("tel:$telefone") ) {
+      await launch("tel:$telefone");
+    }else{
+      print("Não pode fazer a ligação");
+    }
+
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -168,6 +181,23 @@ class _DetalhesAnuncioState extends State<DetalhesAnuncio> {
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Divider(),
                   ),
+                  Text(
+                    "Estado",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red
+                    ),
+                  ),
+
+                  Padding(
+                      padding: EdgeInsets.only(bottom: 66),
+                      child: Text(_anuncio.estado,
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.black
+                      ),),
+                  ),
 
 
                 ],
@@ -198,6 +228,7 @@ class _DetalhesAnuncioState extends State<DetalhesAnuncio> {
                   ),
                 ),
                 onTap: (){
+                  _ligarTelefone( _anuncio.telefone );
 
                 },
               )

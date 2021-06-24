@@ -14,6 +14,7 @@ class Anuncio{
    String _cep;
    String _telefone;
    String _descricao;
+   String _nome;
    List<String> _fotos;
 
 
@@ -28,6 +29,7 @@ class Anuncio{
      this.cep = documentSnapshot["cep"];
      this.cidade = documentSnapshot["cidade"];
      this.descricao = documentSnapshot["descricao"];
+     this.nome = documentSnapshot["nome"];
      this.fotos = List<String>.from(documentSnapshot["fotos"]);
 
    }
@@ -74,6 +76,8 @@ class Anuncio{
         "telefone" :this.telefone,
         // ignore: unnecessary_statements
         "descricao" :this.descricao,
+
+        "nome" :this.nome,
         // ignore: unnecessary_statements
         "fotos" :this.fotos,
 
@@ -134,5 +138,10 @@ class Anuncio{
 
   set id(String value) {
     _id = value;
+  }
+  String get nome => _nome;
+
+  set nome(String value) {
+    _nome = value;
   }
 }

@@ -351,10 +351,24 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                     child: TextFormField(
                         decoration: const InputDecoration(
                             icon: Icon(Icons.title),
-                            hintText: "titulo"
+                            hintText: "Titulo"
                         ),
                         onSaved: (titulo) {
                           _anuncio.titulo = titulo;
+                        }
+
+
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 15),
+                    child: TextFormField(
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.account_circle_outlined),
+                            hintText: "Nome do anunciante"
+                        ),
+                        onSaved: (nome) {
+                          _anuncio.nome = nome;
                         }
 
 
@@ -377,7 +391,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                     child: TextFormField(
                         decoration: const InputDecoration(
                             icon: Icon(Icons.location_city),
-                            hintText: "cidade"
+                            hintText: "Cidade"
                         ),
                         onSaved: (cidade) {
                           _anuncio.cidade = cidade;
@@ -404,7 +418,7 @@ class _NovoAnuncioState extends State<NovoAnuncio> {
                     child: TextFormField(
                         decoration: const InputDecoration(
                             icon: Icon(Icons.location_on),
-                            hintText: "cep"
+                            hintText: "Cep"
                         ),
                         onSaved: (cep) {
                           _anuncio.cep = cep;

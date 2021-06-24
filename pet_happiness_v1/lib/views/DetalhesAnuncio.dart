@@ -125,6 +125,25 @@ class _DetalhesAnuncioState extends State<DetalhesAnuncio> {
                     child: Divider(),
                   ),
                   Text(
+                    "Nome Anunciante",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red
+                    ),
+                  ),
+                  Text(
+                    _anuncio.nome,
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.black
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Divider(),
+                  ),
+                  Text(
                     "Contato",
                     style: TextStyle(
                         fontSize: 18,
